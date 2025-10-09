@@ -26,12 +26,12 @@ class Subcategory extends Model
     protected static function booted(): void
     {
         static::creating(function ($subcategory) {
-            $slug = Str::slug($subcategory->name);
-            $original = $slug;
+            $baseSlug = Str::slug($subcategory->name);
+            $slug = $baseSlug;
             $count = 1;
-            $existingSlugs = Subcategory::where('slug', 'like', $original . '%')->pluck('slug')->toArray();
+            $existingSlugs = Subcategory::where('slug', 'like', $baseSlug . '%')->pluck('slug')->toArray();
             while (in_array($slug, $existingSlugs)) {
-                $slug = $original . '-' . $count++;
+                $slug = $baseSlug . '-' . $count++;
             }
             $subcategory->slug = $slug;
         });

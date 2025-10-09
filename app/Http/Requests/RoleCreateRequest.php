@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CategoryUpdateRequest extends FormRequest
+class RoleCreateRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,8 +15,7 @@ class CategoryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255',
-                Rule::unique('categories', 'name')->ignore($this->route('category')->id),],
+            'name' => ['required', 'string', 'max:255', Rule::unique('roles', 'name')],
             'description' => ['nullable', 'string'],
         ];
     }

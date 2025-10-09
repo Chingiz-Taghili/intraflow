@@ -3,47 +3,42 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoleCreateRequest;
+use App\Http\Requests\RoleUpdateRequest;
+use App\Http\Resources\RoleResource;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class RoleApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return RoleResource::collection(Role::all())->additional(['success' => true]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(RoleCreateRequest $request)
     {
-        //
+        $role = Role::create($request->validated());
+        return (new RoleResource($role))
+            ->additional(['success' => true, 'message' => 'Role created successfully.'])
+            ->response()->setStatusCode(201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Role $role)
     {
-        //
+        return (new RoleResource($role))->additional(['success' => true]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(RoleUpdateRequest $request, Role $role)
     {
-        //
+        $role->update($request->validated());
+        return (new RoleResource($role))
+            ->additional(['success' => true, 'message' => 'Role updated successfully.']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return response()->json(['success' => true, 'message' => 'Role deleted successfully.']);
     }
 }

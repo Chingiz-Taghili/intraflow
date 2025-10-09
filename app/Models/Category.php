@@ -31,12 +31,12 @@ class Category extends Model
     protected static function booted(): void
     {
         static::creating(function ($category) {
-            $slug = Str::slug($category->name);
-            $original = $slug;
+            $baseSlug = Str::slug($category->name);
+            $slug = $baseSlug;
             $count = 1;
-            $existingSlugs = Category::where('slug', 'like', $original . '%')->pluck('slug')->toArray();
+            $existingSlugs = Category::where('slug', 'like', $baseSlug . '%')->pluck('slug')->toArray();
             while (in_array($slug, $existingSlugs)) {
-                $slug = $original . '-' . $count++;
+                $slug = $baseSlug . '-' . $count++;
             }
             $category->slug = $slug;
         });

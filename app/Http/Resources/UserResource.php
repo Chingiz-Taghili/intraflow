@@ -5,16 +5,18 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SubcategoryResource extends JsonResource
+class UserResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
-            'category_id' => $this->category_id,
             'name' => $this->name,
-            'slug' => $this->slug,
-            'description' => $this->description,
+            'surname' => $this->surname,
+            'email' => $this->email,
+            'profile_photo' => $this->profile_photo,
+            'job_title' => $this->job_title,
+            'phone_number' => $this->phone_number,
             'created_at' => $this->created_at,
         ];
     }

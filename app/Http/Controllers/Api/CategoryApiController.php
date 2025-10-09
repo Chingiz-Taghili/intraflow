@@ -13,8 +13,7 @@ class CategoryApiController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
-        return CategoryResource::collection($categories)->additional(['success' => true]);
+        return CategoryResource::collection(Category::all())->additional(['success' => true]);
     }
 
     public function store(CategoryCreateRequest $request)

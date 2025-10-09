@@ -3,32 +3,42 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SubcategoryCreateRequest;
+use App\Http\Requests\SubcategoryUpdateRequest;
+use App\Http\Resources\SubcategoryResource;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class SubcategoryApiController extends Controller
 {
     public function index()
     {
-        //
+        return SubcategoryResource::collection(Subcategory::all())->additional(['success' => true]);
     }
 
-    public function store(Request $request)
+    public function store(SubcategoryCreateRequest $request)
     {
-        //
+        $subcategory = Subcategory::create($request->validated());
+        return (new SubcategoryResource($subcategory))
+            ->additional(['success' => true, 'message' => 'Subcategory created successfully'])
+            ->response()->setStatusCode(201);
     }
 
-    public function show(string $id)
+    public function show(Subcategory $subcategory)
     {
-        //
+        return (new SubcategoryResource($subcategory))->additional(['success' => true]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(SubcategoryUpdateRequest $request, Subcategory $subcategory)
     {
-        //
+        $subcategory->update($request->validated());
+        return (new SubcategoryResource($subcategory))
+            ->additional(['success' => true, 'message' => 'Subcategory updated successfully']);
     }
 
-    public function destroy(string $id)
+    public function destroy(Subcategory $subcategory)
     {
-        //
+        $subcategory->delete();
+        return response()->json(['success' => true, 'message' => 'Subcategory deleted successfully']);
     }
 }
