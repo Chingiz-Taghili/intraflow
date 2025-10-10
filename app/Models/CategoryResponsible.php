@@ -10,7 +10,7 @@ class CategoryResponsible extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['category_id', 'user_id', 'assigned_by', 'assigned_at'];
+    protected $fillable = ['category_id', 'user_id'];
 
     public function category()
     {
@@ -24,5 +24,13 @@ class CategoryResponsible extends Model
     public function assignedBy()
     {
         return $this->belongsTo(User::class, 'assigned_by');
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($responsible) {
+            $responsible->assigned_by = auth()->id();
+            $responsible->assigned_at = now();
+        });
     }
 }

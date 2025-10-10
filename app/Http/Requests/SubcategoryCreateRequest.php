@@ -16,10 +16,10 @@ class SubcategoryCreateRequest extends FormRequest
     {
         return [
             'category_id' => ['required', 'integer', 'exists:categories,id'],
-            'name' => ['required', 'string', 'max:255',
+            'name' => ['required', 'string', 'min:2', 'max:100',
                 Rule::unique('subcategories', 'name')
                     ->where(fn($query) => $query->where('category_id', $this->category_id)),],
-            'description' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'min:2'],
         ];
     }
 }

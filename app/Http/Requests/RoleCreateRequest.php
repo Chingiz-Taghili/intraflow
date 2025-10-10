@@ -15,8 +15,8 @@ class RoleCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', Rule::unique('roles', 'name')],
-            'description' => ['nullable', 'string'],
+            'name' => ['required', 'string', 'min:2', 'max:50', Rule::unique('roles', 'name')],
+            'description' => ['nullable', 'string', 'min:2'],
         ];
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('assigned_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->timestamp('assigned_at')->nullable();
+            $table->timestamp('assigned_at');
             $table->timestamps();
             $table->softDeletes();
         });

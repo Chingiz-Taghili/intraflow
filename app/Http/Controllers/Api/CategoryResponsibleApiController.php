@@ -3,46 +3,34 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryResponsibleCreateRequest;
+use App\Http\Requests\CategoryResponsibleUpdateRequest;
+use App\Models\CategoryResponsible;
 use Illuminate\Http\Request;
 
 class CategoryResponsibleApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(CategoryResponsibleCreateRequest $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(CategoryResponsible $responsible)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(CategoryResponsibleUpdateRequest $request, CategoryResponsible $responsible)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(CategoryResponsible $responsible)
     {
         //
     }
