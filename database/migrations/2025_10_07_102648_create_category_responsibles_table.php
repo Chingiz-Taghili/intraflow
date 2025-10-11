@@ -19,6 +19,8 @@ return new class extends Migration
             $table->timestamp('assigned_at');
             $table->timestamps();
             $table->softDeletes();
+            // Unique constraint for category_id + user_id pair
+            $table->unique(['category_id', 'user_id']);
         });
     }
 

@@ -11,8 +11,7 @@ class Requisition extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id', 'category_id', 'subcategory_id',
-        'item_name', 'notes', 'status', 'parent_request_id',
+        'category_id', 'subcategory_id', 'item_name', 'notes', 'parent_request_id',
     ];
 
     public function user()
@@ -38,5 +37,13 @@ class Requisition extends Model
     public function children()
     {
         return $this->hasMany(Requisition::class, 'parent_request_id');
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($requisition) {
+            $requisition->user_id = $requisition->user_id ?? auth()->id();
+            $requisition->status = 'pending';
+        });
     }
 }

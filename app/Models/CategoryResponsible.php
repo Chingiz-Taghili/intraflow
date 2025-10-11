@@ -29,7 +29,7 @@ class CategoryResponsible extends Model
     protected static function booted(): void
     {
         static::creating(function ($responsible) {
-            $responsible->assigned_by = auth()->id();
+            $responsible->assigned_by = $responsible->assigned_by ?? auth()->id();
             $responsible->assigned_at = now();
         });
     }

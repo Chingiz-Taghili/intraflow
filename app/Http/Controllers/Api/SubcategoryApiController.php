@@ -13,26 +13,27 @@ class SubcategoryApiController extends Controller
 {
     public function index()
     {
-        return SubcategoryResource::collection(Subcategory::all())->additional(['success' => true]);
+        $subcategories = Subcategory::with('category')->get();
+        return SubcategoryResource::collection($subcategories)->additional(['success' => true]);
     }
 
     public function store(SubcategoryCreateRequest $request)
     {
         $subcategory = Subcategory::create($request->validated());
-        return (new SubcategoryResource($subcategory))
+        return (new SubcategoryResource($subcategory->load('category')))
             ->additional(['success' => true, 'message' => 'Subcategory created successfully'])
             ->response()->setStatusCode(201);
     }
 
     public function show(Subcategory $subcategory)
     {
-        return (new SubcategoryResource($subcategory))->additional(['success' => true]);
+        return (new SubcategoryResource($subcategory->load('category')))->additional(['success' => true]);
     }
 
     public function update(SubcategoryUpdateRequest $request, Subcategory $subcategory)
     {
         $subcategory->update($request->validated());
-        return (new SubcategoryResource($subcategory))
+        return (new SubcategoryResource($subcategory->load('category')))
             ->additional(['success' => true, 'message' => 'Subcategory updated successfully']);
     }
 
