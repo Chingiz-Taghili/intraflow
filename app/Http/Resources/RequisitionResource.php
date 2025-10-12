@@ -17,7 +17,9 @@ class RequisitionResource extends JsonResource
             'item_name' => $this->item_name,
             'notes' => $this->notes,
             'status' => $this->status,
+            'images' => RequisitionImageResource::collection($this->whenLoaded('images')),
             'parent' => new RequisitionResource($this->whenLoaded('parent')),
+            'children' => RequisitionResource::collection($this->whenLoaded('children')),
             'created_at' => $this->created_at,
         ];
     }

@@ -29,6 +29,11 @@ class Requisition extends Model
         return $this->belongsTo(Subcategory::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(RequisitionImage::class)->orderBy('sort_order');
+    }
+
     public function parent()
     {
         return $this->belongsTo(Requisition::class, 'parent_request_id');

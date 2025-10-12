@@ -20,23 +20,21 @@ class CategoryResponsibleApiController extends Controller
     public function store(CategoryResponsibleCreateRequest $request)
     {
         $responsible = CategoryResponsible::create($request->validated());
-        $responsible->load('user', 'category', 'assignedBy');
-        return (new CategoryResponsibleResource($responsible))
+        return (new CategoryResponsibleResource($responsible->load(['user', 'category', 'assignedBy'])))
             ->additional(['success' => true, 'message' => 'Category responsible created successfully.'])
             ->response()->setStatusCode(201);
     }
 
     public function show(CategoryResponsible $responsible)
     {
-        $responsible->load(['user', 'category', 'assignedBy']);
-        return (new CategoryResponsibleResource($responsible))->additional(['success' => true]);
+        return (new CategoryResponsibleResource($responsible
+            ->load(['user', 'category', 'assignedBy'])))->additional(['success' => true]);
     }
 
     public function update(CategoryResponsibleUpdateRequest $request, CategoryResponsible $responsible)
     {
         $responsible->update($request->validated());
-        $responsible->load(['user', 'category', 'assignedBy']);
-        return (new CategoryResponsibleResource($responsible))
+        return (new CategoryResponsibleResource($responsible->load(['user', 'category', 'assignedBy'])))
             ->additional(['success' => true, 'message' => 'Category responsible updated successfully.']);
     }
 

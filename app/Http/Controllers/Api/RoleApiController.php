@@ -13,26 +13,26 @@ class RoleApiController extends Controller
 {
     public function index()
     {
-        return RoleResource::collection(Role::all())->additional(['success' => true]);
+        return RoleResource::collection(Role::with('users')->get())->additional(['success' => true]);
     }
 
     public function store(RoleCreateRequest $request)
     {
         $role = Role::create($request->validated());
-        return (new RoleResource($role))
+        return (new RoleResource($role->load('users')))
             ->additional(['success' => true, 'message' => 'Role created successfully.'])
             ->response()->setStatusCode(201);
     }
 
     public function show(Role $role)
     {
-        return (new RoleResource($role))->additional(['success' => true]);
+        return (new RoleResource($role->load('users')))->additional(['success' => true]);
     }
 
     public function update(RoleUpdateRequest $request, Role $role)
     {
         $role->update($request->validated());
-        return (new RoleResource($role))
+        return (new RoleResource($role->load('users')))
             ->additional(['success' => true, 'message' => 'Role updated successfully.']);
     }
 

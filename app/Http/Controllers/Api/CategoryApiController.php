@@ -13,26 +13,28 @@ class CategoryApiController extends Controller
 {
     public function index()
     {
-        return CategoryResource::collection(Category::all())->additional(['success' => true]);
+        $categories = Category::with(['subcategories', 'categoryResponsibles'])->get();
+        return CategoryResource::collection($categories)->additional(['success' => true]);
     }
 
     public function store(CategoryCreateRequest $request)
     {
         $category = Category::create($request->validated());
-        return (new CategoryResource($category))
+        return (new CategoryResource($category->load(['subcategories', 'categoryResponsibles'])))
             ->additional(['success' => true, 'message' => 'Category created successfully'])
             ->response()->setStatusCode(201);
     }
 
     public function show(Category $category)
     {
-        return (new CategoryResource($category))->additional(['success' => true]);
+        return (new CategoryResource($category
+            ->load(['subcategories', 'categoryResponsibles'])))->additional(['success' => true]);
     }
 
     public function update(CategoryUpdateRequest $request, Category $category)
     {
         $category->update($request->validated());
-        return (new CategoryResource($category))
+        return (new CategoryResource($category->load(['subcategories', 'categoryResponsibles'])))
             ->additional(['success' => true, 'message' => 'Category updated successfully']);
     }
 

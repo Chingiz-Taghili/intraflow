@@ -17,6 +17,10 @@ class UserResource extends JsonResource
             'profile_photo' => $this->profile_photo,
             'job_title' => $this->job_title,
             'phone_number' => $this->phone_number,
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
+            'categoryResponsibles' =>
+                CategoryResponsibleResource::collection($this->whenLoaded('categoryResponsibles')),
+            'requisitions' => RequisitionResource::collection($this->whenLoaded('requisitions')),
             'created_at' => $this->created_at,
         ];
     }
