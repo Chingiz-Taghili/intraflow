@@ -15,35 +15,25 @@ class CategoryResponsibleSeeder extends Seeder
     public function run(): void
     {
         $users = User::all();
-
-        // Kateqoriyaları sabit götür
         $office = Category::where('name', 'Ofis Ləvazimatı')->first();
-        $repair = Category::where('name', 'Təmir/Xidmət')->first();
-        $cleaning = Category::where('name', 'Təmizlik')->first();
+        $repair = Category::where('name', 'Təmir Xidməti')->first();
+        $cleaning = Category::where('name', 'Təmizlik Xidməti')->first();
 
-        // Məsuliyyətləri əl ilə təyin et
         CategoryResponsible::create([
-            'user_id' => $users[0]->id,
-            'category_id' => $office->id,
-            'assigned_by' => $users[0]->id, // admin
+            'category_id' => $office->id, 'user_id' => $users[0]->id,
+            'assigned_by' => $users[0]->id, 'assigned_at' => now()
         ]);
-
         CategoryResponsible::create([
-            'user_id' => $users[0]->id,
-            'category_id' => $repair->id,
-            'assigned_by' => $users[0]->id, // admin
+            'category_id' => $repair->id, 'user_id' => $users[0]->id,
+            'assigned_by' => $users[0]->id, 'assigned_at' => now()
         ]);
-
         CategoryResponsible::create([
-            'user_id' => $users[1]->id,
-            'category_id' => $cleaning->id,
-            'assigned_by' => $users[0]->id, // admin
+            'category_id' => $cleaning->id, 'user_id' => $users[1]->id,
+            'assigned_by' => $users[0]->id, 'assigned_at' => now()
         ]);
-
         CategoryResponsible::create([
-            'user_id' => $users[2]->id,
-            'category_id' => $office->id,
-            'assigned_by' => $users[0]->id, // admin
+            'category_id' => $office->id, 'user_id' => $users[2]->id,
+            'assigned_by' => $users[0]->id, 'assigned_at' => now()
         ]);
     }
 }

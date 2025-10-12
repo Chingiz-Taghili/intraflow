@@ -14,14 +14,14 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         // Categories
-        $office = Category::create(['name' => 'Ofis Ləvazimatı']);
-        $repair = Category::create(['name' => 'Təmir/Xidmət']);
-        $cleaning = Category::create(['name' => 'Təmizlik']);
+        $office = Category::create(['name' => 'Ofis Ləvazimatı', 'description' => 'Office related']);
+        $repair = Category::create(['name' => 'Təmir Xidməti', 'description' => 'General repair']);
+        $cleaning = Category::create(['name' => 'Təmizlik Xidməti', 'description' => 'Cleaning and hygiene']);
 
         // Subcategories
-        Subcategory::create(['name' => 'Qələm', 'category_id' => $office->id]);
-        Subcategory::create(['name' => 'Qovluq', 'category_id' => $office->id]);
-        Subcategory::create(['name' => 'Qapı-Pəncərə Təmir', 'category_id' => $repair->id]);
-        Subcategory::create(['name' => 'Təmizlik Məhsulları', 'category_id' => $cleaning->id]);
+        Subcategory::create(['name' => 'Qələm', 'category_id' => $office->id, 'description' => 'Pens for office']);
+        Subcategory::create(['name' => 'Qovluq', 'category_id' => $office->id, 'description' => 'Folders and files']);
+        Subcategory::create(['name' => 'Pəncərə Təmiri', 'category_id' => $repair->id, 'description' => 'Window repair']);
+        Subcategory::create(['name' => 'Təmizlik Məhsulları', 'category_id' => $cleaning->id, 'description' => 'Cleaning products']);
     }
 }

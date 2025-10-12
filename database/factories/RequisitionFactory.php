@@ -24,12 +24,9 @@ class RequisitionFactory extends Factory
         $subcategory = Subcategory::where('category_id', $category->id)->inRandomOrder()->first();
 
         return [
-            'user_id' => $user->id,
-            'category_id' => $category->id,
+            'user_id' => $user->id, 'category_id' => $category->id,
             'subcategory_id' => $subcategory ? $subcategory->id : null,
-            'item_name' => fake()->word(),
-            'notes' => fake()->sentence(),
-            'parent_request_id' => null,
+            'item_name' => fake()->word(), 'notes' => fake()->sentence(),
         ];
     }
 }
