@@ -7,7 +7,6 @@ use App\Http\Requests\CategoryResponsibleCreateRequest;
 use App\Http\Requests\CategoryResponsibleUpdateRequest;
 use App\Http\Resources\CategoryResponsibleResource;
 use App\Models\CategoryResponsible;
-use Illuminate\Http\Request;
 
 class CategoryResponsibleApiController extends Controller
 {

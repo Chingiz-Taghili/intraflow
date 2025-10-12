@@ -7,7 +7,6 @@ use App\Http\Requests\SubcategoryCreateRequest;
 use App\Http\Requests\SubcategoryUpdateRequest;
 use App\Http\Resources\SubcategoryResource;
 use App\Models\Subcategory;
-use Illuminate\Http\Request;
 
 class SubcategoryApiController extends Controller
 {

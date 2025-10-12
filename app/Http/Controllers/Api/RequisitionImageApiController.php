@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequisitionImageCreateRequest;
 use App\Http\Requests\RequisitionImageUpdateRequest;
 use App\Models\RequisitionImage;
-use Illuminate\Http\Request;
 
 class RequisitionImageApiController extends Controller
 {
