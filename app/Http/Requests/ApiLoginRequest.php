@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RequisitionImageCreateRequest extends FormRequest
+class ApiLoginRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,8 +14,8 @@ class RequisitionImageCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'path' => ['required', 'string', 'max:255', 'regex:/\.(jpg|jpeg|png|webp)$/i'],
-            'sort_order' => ['nullable', 'integer', 'min:0'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'max:255'],
         ];
     }
 }

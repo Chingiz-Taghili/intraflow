@@ -12,7 +12,8 @@ class RequisitionApiController extends Controller
 {
     public function index()
     {
-        $requisitions = Requisition::with(['user', 'category', 'subcategory', 'parent', 'children'])->get();
+        $requisitions =
+            Requisition::with(['user', 'category', 'subcategory', 'images', 'parent', 'children'])->get();
         return RequisitionResource::collection($requisitions)->additional(['success' => true]);
     }
 
@@ -20,7 +21,7 @@ class RequisitionApiController extends Controller
     {
         $requisition = Requisition::create($request->validated());
         return (new RequisitionResource($requisition
-            ->load(['user', 'category', 'subcategory', 'parent', 'children'])))
+            ->load(['user', 'category', 'subcategory', 'images', 'parent', 'children'])))
             ->additional(['success' => true, 'message' => 'Requisition created successfully.'])
             ->response()->setStatusCode(201);
     }
@@ -28,14 +29,15 @@ class RequisitionApiController extends Controller
     public function show(Requisition $requisition)
     {
         return (new RequisitionResource($requisition
-            ->load(['user', 'category', 'subcategory', 'parent', 'children'])))->additional(['success' => true]);
+            ->load(['user', 'category', 'subcategory', 'images', 'parent', 'children'])))
+            ->additional(['success' => true]);
     }
 
     public function update(RequisitionUpdateRequest $request, Requisition $requisition)
     {
         $requisition->update($request->validated());
         return (new RequisitionResource($requisition
-            ->load(['user', 'category', 'subcategory', 'parent', 'children'])))
+            ->load(['user', 'category', 'subcategory', 'images', 'parent', 'children'])))
             ->additional(['success' => true, 'message' => 'Requisition updated successfully.']);
     }
 
