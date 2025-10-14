@@ -19,15 +19,11 @@ Route::post('/register', [AuthApiController::class, 'register']);
 // ---------- PROTECTED API ----------
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthApiController::class, 'logout']);
-
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::get('/me', [AuthApiController::class, 'me']);
 
     Route::apiResource('users', UserApiController::class);
-    Route::apiResource('roles', RoleApiController::class);
     Route::apiResource('categories', CategoryApiController::class);
-    Route::apiResource('subcategories', SubcategoryApiController::class);
+    Route::apiResource('categories.subcategories', SubcategoryApiController::class);
     Route::apiResource('responsibles', CategoryResponsibleApiController::class);
     Route::apiResource('requisitions', RequisitionApiController::class);
     Route::apiResource('requisitions.images', RequisitionImageApiController::class);

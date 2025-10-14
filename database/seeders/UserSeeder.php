@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminRole = Role::where('name', 'Admin')->first();
+        //$adminRole = Role::where('name', 'Admin')->first();
 
         // Test users
         $users = [
@@ -57,7 +57,7 @@ class UserSeeder extends Seeder
 
         foreach ($users as $data) {
             $user = User::create(array_merge($data, ['email_verified_at' => now()]));
-            $user->roles()->attach($adminRole->id);
+            //$user->roles()->attach($adminRole->id);
         }
     }
 }

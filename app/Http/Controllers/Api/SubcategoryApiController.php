@@ -6,38 +6,48 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SubcategoryCreateRequest;
 use App\Http\Requests\SubcategoryUpdateRequest;
 use App\Http\Resources\SubcategoryResource;
+use App\Models\Category;
 use App\Models\Subcategory;
 
 class SubcategoryApiController extends Controller
 {
-    public function index()
+    public function index(Category $category)
     {
-        $subcategories = Subcategory::with('category')->get();
+        $subcategories = $category->subcategories;
         return SubcategoryResource::collection($subcategories)->additional(['success' => true]);
     }
 
-    public function store(SubcategoryCreateRequest $request)
+    public function store(SubcategoryCreateRequest $request, Category $category)
     {
-        $subcategory = Subcategory::create($request->validated());
-        return (new SubcategoryResource($subcategory->load('category')))
-            ->additional(['success' => true, 'message' => 'Subcategory created successfully'])
+        $subcategory = $category->subcategories()->create($request->validated());
+        return (new SubcategoryResource($subcategory))
+            ->additional(['success' => true, 'message' => 'Subcategory created successfully.'])
             ->response()->setStatusCode(201);
     }
 
-    public function show(Subcategory $subcategory)
+    public function show(Category $category, Subcategory $subcategory)
     {
-        return (new SubcategoryResource($subcategory->load('category')))->additional(['success' => true]);
+        if ($subcategory->category_id !== $category->id) {
+            abort(404, 'Subcategory not found in this requisition.');
+        }
+        return (new SubcategoryResource($subcategory))->additional(['success' => true]);
     }
 
-    public function update(SubcategoryUpdateRequest $request, Subcategory $subcategory)
+    public function update(SubcategoryUpdateRequest $request, Category $category, Subcategory $subcategory)
     {
+        if ($subcategory->category_id !== $category->id) {
+            abort(404, 'Subcategory not found in this requisition.');
+        }
         $subcategory->update($request->validated());
-        return (new SubcategoryResource($subcategory->load('category')))
+        return (new SubcategoryResource($subcategory))
             ->additional(['success' => true, 'message' => 'Subcategory updated successfully']);
     }
 
-    public function destroy(Subcategory $subcategory)
+    public function destroy(Category $category, Subcategory $subcategory)
     {
+        if ($subcategory->category_id !== $category->id) {
+            abort(404, 'Subcategory not found in this requisition.');
+        }
         $subcategory->delete();
         return response()->json(['success' => true, 'message' => 'Subcategory deleted successfully']);
     }
