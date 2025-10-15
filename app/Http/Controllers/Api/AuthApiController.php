@@ -27,7 +27,7 @@ class AuthApiController extends Controller
             'job_title' => $validated['job_title'] ?? null,
             'phone_number' => $validated['phone_number'] ?? null,
         ]);
-
+        $user->assignRole('user');
         $token = $user->createToken('api_token')->plainTextToken;
 
         return (new UserResource($user))->additional([

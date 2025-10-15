@@ -19,6 +19,7 @@ class UserApiController extends Controller
     public function store(UserCreateRequest $request)
     {
         $user = User::create($request->validated());
+        $user->assignRole('user');
         return (new UserResource($user->load(['roles', 'categoryResponsibles', 'requisitions'])))
             ->additional(['success' => true, 'message' => 'User created successfully.'])
             ->response()->setStatusCode(201);

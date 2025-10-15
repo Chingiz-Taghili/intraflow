@@ -18,10 +18,6 @@ return new class extends Migration
         Schema::table('subcategories', function (Blueprint $table) {
             $table->string('slug')->nullable()->after('name');
         });
-
-        Schema::table('roles', function (Blueprint $table) {
-            $table->string('slug')->nullable()->after('name');
-        });
     }
 
     /**
@@ -31,6 +27,5 @@ return new class extends Migration
     {
         Schema::table('categories', fn(Blueprint $t) => $t->dropColumn('slug'));
         Schema::table('subcategories', fn(Blueprint $t) => $t->dropColumn('slug'));
-        Schema::table('roles', fn(Blueprint $t) => $t->dropColumn('slug'));
     }
 };
