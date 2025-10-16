@@ -33,6 +33,9 @@ class UserApiController extends Controller
 
     public function update(UserUpdateRequest $request, User $user)
     {
+        // policy is called
+        $this->authorize('update', $user);
+
         $user->update($request->validated());
         return (new UserResource($user->load(['roles', 'categoryResponsibles', 'requisitions'])))
             ->additional(['success' => true, 'message' => 'User updated successfully.']);

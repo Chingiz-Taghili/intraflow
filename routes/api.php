@@ -20,12 +20,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthApiController::class, 'logout']);
     Route::get('/me', [AuthApiController::class, 'me']);
 
-    Route::middleware('role:admin')->group(function () {
-        Route::apiResource('users', UserApiController::class);
+    Route::apiResource('requisitions', RequisitionApiController::class)
+        ->except('index');
+    Route::apiResource('users', UserApiController::class)->only('update');
+
+    Route::middleware('role:admin|superadmin')->group(function () {
         Route::apiResource('categories', CategoryApiController::class);
         Route::apiResource('categories.subcategories', SubcategoryApiController::class);
         Route::apiResource('responsibles', CategoryResponsibleApiController::class);
-        Route::apiResource('requisitions', RequisitionApiController::class);
+        Route::apiResource('requisitions', RequisitionApiController::class)
+            ->only('index');
         Route::apiResource('requisitions.images', RequisitionImageApiController::class);
+    });
+
+    Route::middleware('role:superadmin')->group(function () {
+        Route::apiResource('users', UserApiController::class)->except('update');
     });
 });

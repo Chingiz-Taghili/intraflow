@@ -28,6 +28,9 @@ class RequisitionApiController extends Controller
 
     public function show(Requisition $requisition)
     {
+        // policy is called
+        $this->authorize('view', $requisition);
+
         return (new RequisitionResource($requisition
             ->load(['user', 'category', 'subcategory', 'images', 'parent', 'children'])))
             ->additional(['success' => true]);
@@ -35,6 +38,9 @@ class RequisitionApiController extends Controller
 
     public function update(RequisitionUpdateRequest $request, Requisition $requisition)
     {
+        // policy is called
+        $this->authorize('update', $requisition);
+
         $requisition->update($request->validated());
         return (new RequisitionResource($requisition
             ->load(['user', 'category', 'subcategory', 'images', 'parent', 'children'])))
@@ -43,6 +49,9 @@ class RequisitionApiController extends Controller
 
     public function destroy(Requisition $requisition)
     {
+        // policy is called
+        $this->authorize('delete', $requisition);
+
         $requisition->delete();
         return response()->json(['success' => true, 'message' => 'Requisition deleted successfully.']);
     }
