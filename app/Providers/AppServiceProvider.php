@@ -19,7 +19,6 @@ class AppServiceProvider extends ServiceProvider
         Laravel 12 auto-discovers them if naming conventions are followed */
         //Gate::policy(User::class, UserPolicy::class);
         //Gate::policy(Requisition::class, RequisitionPolicy::class);
-        //Gate::policy(RequisitionImage::class, RequisitionImagePolicy::class);
 
         // Allow superadmin for all abilities
         Gate::before(function (User $user, string $ability) {

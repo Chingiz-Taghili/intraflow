@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('requisitions', RequisitionApiController::class)
         ->except('index');
+    Route::apiResource('requisitions.images', RequisitionImageApiController::class);
     Route::apiResource('users', UserApiController::class)->only('update');
 
     Route::middleware('role:admin|superadmin')->group(function () {
@@ -30,7 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('responsibles', CategoryResponsibleApiController::class);
         Route::apiResource('requisitions', RequisitionApiController::class)
             ->only('index');
-        Route::apiResource('requisitions.images', RequisitionImageApiController::class);
     });
 
     Route::middleware('role:superadmin')->group(function () {

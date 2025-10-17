@@ -21,7 +21,7 @@ class RequisitionPolicy
      */
     public function view(User $user, Requisition $requisition): bool
     {
-        return $user->hasAnyRole(['admin', 'superadmin']) || $user->id === $requisition->user_id;
+        return $user->hasRole('admin') || $user->id === $requisition->user_id;
     }
 
     /**
@@ -37,7 +37,7 @@ class RequisitionPolicy
      */
     public function update(User $user, Requisition $requisition): bool
     {
-        return $user->hasAnyRole(['admin', 'superadmin']) || $user->id === $requisition->user_id;
+        return $user->hasRole('admin') || $user->id === $requisition->user_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class RequisitionPolicy
      */
     public function delete(User $user, Requisition $requisition): bool
     {
-        return $user->hasAnyRole(['admin', 'superadmin']) || $user->id === $requisition->user_id;
+        return $user->hasRole('admin') || $user->id === $requisition->user_id;
     }
 
     /**

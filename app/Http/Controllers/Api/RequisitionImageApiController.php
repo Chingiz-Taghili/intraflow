@@ -13,12 +13,16 @@ class RequisitionImageApiController extends Controller
 {
     public function index(Requisition $requisition)
     {
+        $this->authorize('view', $requisition);
+
         $images = $requisition->images;
         return RequisitionImageResource::collection($images)->additional(['success' => true]);
     }
 
     public function store(RequisitionImageCreateRequest $request, Requisition $requisition)
     {
+        $this->authorize('view', $requisition);
+
         $image = $requisition->images()->create($request->validated());
         return (new RequisitionImageResource($image))
             ->additional(['success' => true, 'message' => 'Image uploaded successfully.'])
@@ -27,6 +31,8 @@ class RequisitionImageApiController extends Controller
 
     public function show(Requisition $requisition, RequisitionImage $image)
     {
+        $this->authorize('view', $requisition);
+
         if ($image->requisition_id !== $requisition->id) {
             abort(404, 'Image not found in this requisition.');
         }
@@ -36,6 +42,8 @@ class RequisitionImageApiController extends Controller
     public function update(
         RequisitionImageUpdateRequest $request, Requisition $requisition, RequisitionImage $image)
     {
+        $this->authorize('view', $requisition);
+
         if ($image->requisition_id !== $requisition->id){
             abort(404, 'Image not found in this requisition.');
         }
@@ -46,6 +54,8 @@ class RequisitionImageApiController extends Controller
 
     public function destroy(Requisition $requisition, RequisitionImage $image)
     {
+        $this->authorize('view', $requisition);
+
         if ($image->requisition_id !== $requisition->id){
             abort(404, 'Image not found in this requisition.');
         }
