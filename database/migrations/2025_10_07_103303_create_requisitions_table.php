@@ -14,10 +14,13 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('subcategory_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('subcategory_id')->nullable()->constrained()->nullOnDelete();
             $table->string('item_name');
             $table->text('notes')->nullable();
-            $table->enum('status', ['pending', 'approved', 'forwarded', 'rejected'])->default('pending');
+            $table->enum('status', ['draft', 'pending_leader',
+                'approved_leader', 'rejected_leader', 'pending', 'accepted', 'rejected',
+                'forwarded', 'in_progress', 'completed', 'cancelled',])->default('draft');
+            $table->foreignId('reviewed_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('parent_request_id')->
             nullable()->constrained('requisitions')->cascadeOnDelete();
             $table->timestamps();

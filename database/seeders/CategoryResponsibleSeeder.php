@@ -20,19 +20,19 @@ class CategoryResponsibleSeeder extends Seeder
         $cleaning = Category::where('name', 'Təmizlik Xidməti')->first();
 
         CategoryResponsible::create([
-            'category_id' => $office->id, 'user_id' => $users[0]->id,
+            'category_id' => $office->id, 'user_id' => $users[1]->id,
             'assigned_by' => $users[0]->id, 'assigned_at' => now()
         ]);
         CategoryResponsible::create([
-            'category_id' => $repair->id, 'user_id' => $users[0]->id,
+            'category_id' => $repair->id, 'user_id' => $users[1]->id,
             'assigned_by' => $users[0]->id, 'assigned_at' => now()
         ]);
         CategoryResponsible::create([
-            'category_id' => $cleaning->id, 'user_id' => $users[1]->id,
+            'category_id' => $cleaning->id, 'user_id' => $users[2]->id,
             'assigned_by' => $users[0]->id, 'assigned_at' => now()
         ]);
         CategoryResponsible::create([
-            'category_id' => $office->id, 'user_id' => $users[2]->id,
+            'category_id' => $office->id, 'user_id' => $users[3]->id,
             'assigned_by' => $users[0]->id, 'assigned_at' => now()
         ]);
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -13,12 +14,12 @@ class Category extends Model
 
     protected $fillable = ['name', 'description'];
 
-    public function subcategories()
+    public function subcategories(): HasMany
     {
         return $this->hasMany(Subcategory::class);
     }
 
-    public function categoryResponsibles()
+    public function categoryResponsibles(): HasMany
     {
         return $this->hasMany(CategoryResponsible::class);
     }
