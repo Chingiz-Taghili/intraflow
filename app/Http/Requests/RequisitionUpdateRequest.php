@@ -14,11 +14,11 @@ class RequisitionUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required', 'integer', 'exists:categories,id'],
-            'subcategory_id' => ['nullable', 'integer', 'exists:subcategories,id'],
-            'item_name' => ['required', 'string', 'min:2', 'max:100'],
-            'notes' => ['nullable', 'string', 'min:2'],
-            'parent_request_id' => ['nullable', 'integer', 'exists:requisitions,id'],
+            'category_id' => ['sometimes', 'integer', 'exists:categories,id'],
+            'subcategory_id' => ['sometimes', 'nullable', 'integer', 'exists:subcategories,id'],
+            'item_name' => ['sometimes', 'string', 'min:2', 'max:100'],
+            'notes' => ['sometimes', 'nullable', 'string', 'min:2'],
+            'parent_request_id' => ['sometimes', 'nullable', 'integer', 'exists:requisitions,id'],
         ];
     }
 }

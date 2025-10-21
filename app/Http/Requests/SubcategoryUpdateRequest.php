@@ -15,11 +15,11 @@ class SubcategoryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:2', 'max:100',
+            'name' => ['sometimes', 'string', 'min:2', 'max:100',
                 Rule::unique('subcategories')->where(fn($query) => $query
                     ->where('category_id', $this->route('category')->id))
                     ->ignore($this->route('subcategory')->id),],
-            'description' => ['nullable', 'string', 'min:2'],
+            'description' => ['sometimes', 'nullable', 'string', 'min:2'],
         ];
     }
 }

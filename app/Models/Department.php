@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Department extends Model
 {
@@ -24,8 +25,24 @@ class Department extends Model
         return $this->hasMany(User::class);
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     protected static function booted(): void
     {
+        static::creating(function ($department) {
+            $baseSlug = Str::slug($department->name);
+            $slug = $baseSlug;
+            $count = 1;
+            $existingSlugs = Department::where('slug', 'like', $baseSlug . '%')->pluck('slug')->toArray();
+            while (in_array($slug, $existingSlugs)) {
+                $slug = $baseSlug . '-' . $count++;
+            }
+            $department->slug = $slug;
+        });
+
         static::deleting(function (Department $department) {
             //Default department cannot be deleted
             if ($department->id === 1) {

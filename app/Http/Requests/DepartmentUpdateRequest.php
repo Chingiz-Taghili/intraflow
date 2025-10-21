@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CategoryUpdateRequest extends FormRequest
+class DepartmentUpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -16,8 +16,8 @@ class CategoryUpdateRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string', 'min:2', 'max:100',
-                Rule::unique('categories', 'name')->ignore($this->route('category')->id),],
-            'description' => ['sometimes', 'nullable', 'string', 'min:2'],
+                Rule::unique('departments')->ignore($this->route('department')->id),],
+            'leader_id' => ['sometimes', 'integer', 'exists:users,id'],
         ];
     }
 }

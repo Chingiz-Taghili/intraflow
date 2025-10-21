@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\CategoryApiController;
 use App\Http\Controllers\Api\CategoryResponsibleApiController;
+use App\Http\Controllers\Api\DepartmentApiController;
 use App\Http\Controllers\Api\RequisitionApiController;
 use App\Http\Controllers\Api\RequisitionImageApiController;
 use App\Http\Controllers\Api\SubcategoryApiController;
@@ -25,14 +26,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('requisitions.images', RequisitionImageApiController::class);
     Route::apiResource('users', UserApiController::class)->only('update');
 
+    // ---------- admin|superadmin only ----------
     Route::middleware('role:admin|superadmin')->group(function () {
         Route::apiResource('categories', CategoryApiController::class);
         Route::apiResource('categories.subcategories', SubcategoryApiController::class);
+        Route::apiResource('departments', DepartmentApiController::class);
         Route::apiResource('responsibles', CategoryResponsibleApiController::class);
         Route::apiResource('requisitions', RequisitionApiController::class)
             ->only('index');
     });
 
+    // ---------- superadmin only ----------
     Route::middleware('role:superadmin')->group(function () {
         Route::apiResource('users', UserApiController::class)->except('update');
     });

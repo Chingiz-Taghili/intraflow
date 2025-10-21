@@ -14,8 +14,8 @@ class RequisitionImageUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'path' => ['required', 'string', 'max:255', 'regex:/\.(jpg|jpeg|png|webp)$/i'],
-            'sort_order' => ['nullable', 'integer', 'min:0'],
+            'path' => ['sometimes', 'string', 'max:255', 'regex:/\.(jpg|jpeg|png|webp)$/i'],
+            'sort_order' => ['sometimes', 'nullable', 'integer', 'min:0'],
         ];
     }
 }

@@ -15,14 +15,15 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:2', 'max:50'],
-            'surname' => ['nullable', 'string', 'min:2', 'max:50'],
-            'email' => ['required', 'string', 'email', 'max:255',
+            'name' => ['sometimes', 'string', 'min:2', 'max:50'],
+            'surname' => ['sometimes', 'nullable', 'string', 'min:2', 'max:50'],
+            'email' => ['sometimes', 'string', 'email', 'max:255',
                 Rule::unique('users', 'email')->ignore($this->route('user'))],
-            'password' => ['nullable', 'string', 'min:8', 'max:255', 'confirmed'],
-            'profile_photo' => ['nullable', 'string', 'max:255', 'regex:/\.(jpg|jpeg|png|webp)$/i'],
-            'job_title' => ['nullable', 'string', 'min:2', 'max:100'],
-            'phone_number' => ['nullable', 'string', 'min:2', 'max:20', 'regex:/^\+?[0-9]+$/'],
+            'password' => ['sometimes', 'string', 'min:8', 'max:255', 'confirmed'],
+            'profile_photo' => ['sometimes', 'nullable', 'string', 'max:255', 'regex:/\.(jpg|jpeg|png|webp)$/i'],
+            'department_id' => ['sometimes', 'integer', 'exists:departments,id'],
+            'job_title' => ['sometimes', 'nullable', 'string', 'min:2', 'max:100'],
+            'phone_number' => ['sometimes', 'nullable', 'string', 'min:2', 'max:20', 'regex:/^\+?[0-9]+$/'],
         ];
     }
 }

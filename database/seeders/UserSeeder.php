@@ -42,10 +42,10 @@ class UserSeeder extends Seeder
                 'job_title' => 'Mobile Developer',
             ],
             [
-                'name' => 'Elvin',
+                'name' => 'Pərvin',
                 'surname' => 'Hüseynov',
-                'email' => 'elvin@mail.com',
-                'profile_photo' => 'elvin.png',
+                'email' => 'pervin@mail.com',
+                'profile_photo' => 'pervin.png',
                 'job_title' => 'Frontend Developer',
             ],
         ];
@@ -54,6 +54,7 @@ class UserSeeder extends Seeder
             $admin = User::firstOrCreate(array_merge($data, [
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345678'),
+                'department_id' => 1,
                 'phone_number' => '+99812345678',]));
             $admin->assignRole('admin');
         }
@@ -66,6 +67,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('12345678'),
             'profile_photo' => 'nicat.png',
+            'department_id' => 1,
             'job_title' => 'SQL Developer',
             'phone_number' => '+99812345678',
         ]);

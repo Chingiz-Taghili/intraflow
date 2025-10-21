@@ -12,7 +12,7 @@ class UserApiController extends Controller
 {
     public function index()
     {
-        $users = User::with(['roles', 'categoryResponsibles', 'requisitions'])->get();
+        $users = User::with(['department', 'roles', 'categoryResponsibles', 'requisitions'])->get();
         return UserResource::collection($users)->additional(['success' => true]);
     }
 
@@ -20,15 +20,15 @@ class UserApiController extends Controller
     {
         $user = User::create($request->validated());
         $user->assignRole('user');
-        return (new UserResource($user->load(['roles', 'categoryResponsibles', 'requisitions'])))
+        return (new UserResource($user->load(['department', 'roles', 'categoryResponsibles', 'requisitions'])))
             ->additional(['success' => true, 'message' => 'User created successfully.'])
             ->response()->setStatusCode(201);
     }
 
     public function show(User $user)
     {
-        return (new UserResource($user
-            ->load(['roles', 'categoryResponsibles', 'requisitions'])))->additional(['success' => true]);
+        return (new UserResource($user->load([
+            'department', 'roles', 'categoryResponsibles', 'requisitions'])))->additional(['success' => true]);
     }
 
     public function update(UserUpdateRequest $request, User $user)
@@ -37,7 +37,7 @@ class UserApiController extends Controller
         $this->authorize('update', $user);
 
         $user->update($request->validated());
-        return (new UserResource($user->load(['roles', 'categoryResponsibles', 'requisitions'])))
+        return (new UserResource($user->load(['department', 'roles', 'categoryResponsibles', 'requisitions'])))
             ->additional(['success' => true, 'message' => 'User updated successfully.']);
     }
 

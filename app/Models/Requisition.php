@@ -56,7 +56,7 @@ class Requisition extends Model
     {
         static::creating(function ($requisition) {
             $requisition->user_id = $requisition->user_id ?? auth()->id();
-            $requisition->status = 'pending';
+            $requisition->status = 'draft';
         });
     }
 }
