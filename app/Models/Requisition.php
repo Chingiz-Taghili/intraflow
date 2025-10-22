@@ -14,7 +14,8 @@ class Requisition extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'category_id', 'subcategory_id', 'item_name', 'notes', 'parent_request_id',
+        'category_id', 'subcategory_id', 'item_name', 'notes',
+        'status', 'reviewed_by', 'parent_request_id',
     ];
 
     public function user(): BelongsTo
@@ -37,6 +38,11 @@ class Requisition extends Model
         return $this->hasMany(RequisitionImage::class)->orderBy('sort_order');
     }
 
+    public function reviewedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'reviewed_by');
+    }
+
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Requisition::class, 'parent_request_id');
@@ -56,7 +62,7 @@ class Requisition extends Model
     {
         static::creating(function ($requisition) {
             $requisition->user_id = $requisition->user_id ?? auth()->id();
-            $requisition->status = 'draft';
+            $requisition->status = $requisition->status ?? RequisitionStatus::DRAFT->value;
         });
     }
 }

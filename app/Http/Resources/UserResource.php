@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'job_title' => $this->job_title,
             'phone_number' => $this->phone_number,
             'roles' => $this->getRoleNames(),
-            'categoryResponsibles' =>
+            'category_responsibles' =>
                 CategoryResponsibleResource::collection($this->whenLoaded('categoryResponsibles')),
             'requisitions' => RequisitionResource::collection($this->whenLoaded('requisitions')),
             'created_at' => $this->created_at,

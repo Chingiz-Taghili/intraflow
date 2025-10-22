@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('requisitions', RequisitionApiController::class)
         ->except('index');
     Route::apiResource('requisitions.images', RequisitionImageApiController::class);
+    Route::put('requisitions/{requisition}/status', [RequisitionApiController::class, 'changeStatus']);
     Route::apiResource('users', UserApiController::class)->only('update');
 
     // ---------- admin|superadmin only ----------

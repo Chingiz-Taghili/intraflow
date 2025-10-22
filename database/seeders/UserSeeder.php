@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -72,5 +73,8 @@ class UserSeeder extends Seeder
             'phone_number' => '+99812345678',
         ]);
         $user->assignRole('user');
+
+        // Assign department leader
+        Department::find(1)->update(['leader_id' => 2]);
     }
 }
