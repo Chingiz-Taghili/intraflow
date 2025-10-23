@@ -7,6 +7,7 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UserApiController extends Controller
 {
@@ -45,5 +46,27 @@ class UserApiController extends Controller
     {
         $user->delete();
         return response()->json(['success' => true, 'message' => 'User deleted successfully.']);
+    }
+
+    public function assignRole(User $user, Role $role)
+    {
+        if ($user->email === env('SUPERADMIN_EMAIL')) {
+            return response()->json(['success' => false,
+                'message' => 'Root superadmin role cannot be modified.'], 403);
+        }
+        $user->assignRole($role);
+        return response()->json(['success' => true,
+            'message' => 'Role assigned to user successfully.', 'data' => $user->getRoleNames()]);
+    }
+
+    public function removeRole(User $user, Role $role)
+    {
+        if ($user->email === env('SUPERADMIN_EMAIL')) {
+            return response()->json(['success' => false,
+                'message' => 'Root superadmin role cannot be modified.'], 403);
+        }
+        $user->removeRole($role);
+        return response()->json(['success' => true,
+            'message' => 'Role removed from user successfully.', 'data' => $user->getRoleNames()]);
     }
 }

@@ -8,7 +8,6 @@ use App\Http\Controllers\Api\RequisitionApiController;
 use App\Http\Controllers\Api\RequisitionImageApiController;
 use App\Http\Controllers\Api\SubcategoryApiController;
 use App\Http\Controllers\Api\UserApiController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // ---------- PUBLIC API ----------
@@ -40,5 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // ---------- superadmin only ----------
     Route::middleware('role:superadmin')->group(function () {
         Route::apiResource('users', UserApiController::class)->except('update');
+        Route::post('users/{user}/assign-role/{role}', [UserApiController::class, 'assignRole']);
+        Route::delete('users/{user}/remove-role/{role}', [UserApiController::class, 'removeRole']);
     });
 });
