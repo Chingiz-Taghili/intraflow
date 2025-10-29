@@ -6,31 +6,40 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Dynamic Title -->
+    {{-- Page Title --}}
     <title>@yield('title', 'Intraflow Dashboard')</title>
 
     <!-- plugins:css -->
-    <link rel="stylesheet" href="vendors/feather/feather.css">
-    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="{{ asset('vendors/feather/feather.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/ti-icons/css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/mdi/css/materialdesignicons.min.css') }}">
+
+    {{-- Plugin css for each page --}}
+    @yield('page-plugin-css')
+    {{-- End plugin css for each page --}}
     <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" type="text/css" href="js/select.dataTables.min.css">
-    <!-- End plugin css for this page -->
+
     <!-- inject:css -->
-    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
-    <link rel="shortcut icon" href="images/favicon.png" />
+
+    {{-- Custom css for each page --}}
+    @yield('page-css')
+    {{-- End custom css for each page --}}
+
+    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}"/>
 </head>
 <body>
 <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="images/logo.svg" class="mr-2" alt="logo"/></a>
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a>
+            <a class="navbar-brand brand-logo mr-5" href="{{ route('admin.dashboard') }}"><img src="images/logo.svg"
+                                                                                         class="mr-2"
+                                                                                         alt="logo"/></a>
+            <a class="navbar-brand brand-logo-mini" href="{{ route('admin.dashboard') }}"><img src="images/logo-mini.svg"
+                                                                                         alt="logo"/></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
             <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -44,17 +53,20 @@
                   <i class="icon-search"></i>
                 </span>
                         </div>
-                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
+                               aria-label="search" aria-describedby="search">
                     </div>
                 </li>
             </ul>
             <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item dropdown">
-                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+                       data-toggle="dropdown">
                         <i class="icon-bell mx-0"></i>
                         <span class="count"></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                         aria-labelledby="notificationDropdown">
                         <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
                         <a class="dropdown-item preview-item">
                             <div class="preview-thumbnail">
@@ -118,7 +130,8 @@
                     </a>
                 </li>
             </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
                 <span class="icon-menu"></span>
             </button>
         </div>
@@ -131,8 +144,14 @@
             <div id="theme-settings" class="settings-panel">
                 <i class="settings-close ti-close"></i>
                 <p class="settings-heading">SIDEBAR SKINS</p>
-                <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
-                <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                    Light
+                </div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                    Dark
+                </div>
                 <p class="settings-heading mt-2">HEADER SKINS</p>
                 <div class="color-tiles mx-0 px-4">
                     <div class="tiles success"></div>
@@ -148,19 +167,23 @@
             <i class="settings-close ti-close"></i>
             <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+                    <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab"
+                       aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="chats-tab" data-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
+                    <a class="nav-link" id="chats-tab" data-toggle="tab" href="#chats-section" role="tab"
+                       aria-controls="chats-section">CHATS</a>
                 </li>
             </ul>
             <div class="tab-content" id="setting-content">
-                <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+                <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel"
+                     aria-labelledby="todo-section">
                     <div class="add-items d-flex px-3 mb-0">
                         <form class="form w-100">
                             <div class="form-group d-flex">
                                 <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
-                                <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+                                <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -235,11 +258,14 @@
                 <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
                     <div class="d-flex align-items-center justify-content-between border-bottom">
                         <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
-                        <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
+                        <small
+                            class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See
+                            All</small>
                     </div>
                     <ul class="chat-list">
                         <li class="list active">
-                            <div class="profile"><img src="images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                            <div class="profile"><img src="images/faces/face1.jpg" alt="image"><span
+                                    class="online"></span></div>
                             <div class="info">
                                 <p>Thomas Douglas</p>
                                 <p>Available</p>
@@ -247,7 +273,8 @@
                             <small class="text-muted my-auto">19 min</small>
                         </li>
                         <li class="list">
-                            <div class="profile"><img src="images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
+                            <div class="profile"><img src="images/faces/face2.jpg" alt="image"><span
+                                    class="offline"></span></div>
                             <div class="info">
                                 <div class="wrapper d-flex">
                                     <p>Catherine</p>
@@ -258,7 +285,8 @@
                             <small class="text-muted my-auto">23 min</small>
                         </li>
                         <li class="list">
-                            <div class="profile"><img src="images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                            <div class="profile"><img src="images/faces/face3.jpg" alt="image"><span
+                                    class="online"></span></div>
                             <div class="info">
                                 <p>Daniel Russell</p>
                                 <p>Available</p>
@@ -266,7 +294,8 @@
                             <small class="text-muted my-auto">14 min</small>
                         </li>
                         <li class="list">
-                            <div class="profile"><img src="images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                            <div class="profile"><img src="images/faces/face4.jpg" alt="image"><span
+                                    class="offline"></span></div>
                             <div class="info">
                                 <p>James Richardson</p>
                                 <p>Away</p>
@@ -274,7 +303,8 @@
                             <small class="text-muted my-auto">2 min</small>
                         </li>
                         <li class="list">
-                            <div class="profile"><img src="images/faces/face5.jpg" alt="image"><span class="online"></span></div>
+                            <div class="profile"><img src="images/faces/face5.jpg" alt="image"><span
+                                    class="online"></span></div>
                             <div class="info">
                                 <p>Madeline Kennedy</p>
                                 <p>Available</p>
@@ -282,7 +312,8 @@
                             <small class="text-muted my-auto">5 min</small>
                         </li>
                         <li class="list">
-                            <div class="profile"><img src="images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                            <div class="profile"><img src="images/faces/face6.jpg" alt="image"><span
+                                    class="online"></span></div>
                             <div class="info">
                                 <p>Sarah Graves</p>
                                 <p>Available</p>
@@ -299,70 +330,115 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
                         <i class="icon-grid menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                        <i class="icon-layout menu-icon"></i>
+                    <a class="nav-link" data-toggle="collapse" href="#users" aria-expanded="false"
+                       aria-controls="users">
+                        <i class="icon-head menu-icon"></i>
                         <span class="menu-title">Users</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="ui-basic">
+                    <div class="collapse" id="users">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">All Users</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Create New User</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.users.index') }}">All Users</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.users.create') }}">Create
+                                    User</a></li>
+                            <li class="nav-item"><a class="nav-link" href="pages/ui-features/typography.html">User
+                                    Roles</a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                    <a class="nav-link" data-toggle="collapse" href="#categories" aria-expanded="false"
+                       aria-controls="categories">
+                        <i class="icon-grid-2 menu-icon"></i>
+                        <span class="menu-title">Categories</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="categories">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"><a class="nav-link" href="pages/ui-features/buttons.html">All Categories</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="pages/ui-features/dropdowns.html">Create
+                                    Category</a></li>
+                            <li class="nav-item"><a class="nav-link" href="pages/ui-features/typography.html">Responsibles</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                       aria-controls="ui-basic">
+                        <i class="icon-layout menu-icon"></i>
+                        <span class="menu-title">UI Elements</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"><a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link"
+                                                    href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
+                            <li class="nav-item"><a class="nav-link"
+                                                    href="pages/ui-features/typography.html">Typography</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                       aria-controls="form-elements">
                         <i class="icon-columns menu-icon"></i>
                         <span class="menu-title">Form elements</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="collapse" id="form-elements">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
+                            <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic
+                                    Elements</a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+                    <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false"
+                       aria-controls="charts">
                         <i class="icon-bar-graph menu-icon"></i>
                         <span class="menu-title">Charts</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="collapse" id="charts">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
+                            <li class="nav-item"><a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+                    <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
+                       aria-controls="tables">
                         <i class="icon-grid-2 menu-icon"></i>
                         <span class="menu-title">Tables</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="collapse" id="tables">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic table</a></li>
+                            <li class="nav-item"><a class="nav-link" href="pages/tables/basic-table.html">Basic
+                                    table</a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                    <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false"
+                       aria-controls="icons">
                         <i class="icon-contract menu-icon"></i>
                         <span class="menu-title">Icons</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="collapse" id="icons">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a></li>
+                            <li class="nav-item"><a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a></li>
                         </ul>
                     </div>
                 </li>
@@ -374,21 +450,23 @@
                     </a>
                     <div class="collapse" id="auth">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                            <li class="nav-item"><a class="nav-link" href="pages/samples/login.html"> Login </a></li>
+                            <li class="nav-item"><a class="nav-link" href="pages/samples/register.html"> Register </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+                    <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false"
+                       aria-controls="error">
                         <i class="icon-ban menu-icon"></i>
                         <span class="menu-title">Error pages</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="collapse" id="error">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+                            <li class="nav-item"><a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
+                            <li class="nav-item"><a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
                         </ul>
                     </div>
                 </li>
@@ -404,19 +482,23 @@
         <div class="main-panel">
             <div class="content-wrapper">
 
-                <!-- Dynamic Content -->
+                <!-- Page Content -->
                 @yield('content')
+                <!-- End Page Content -->
 
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
             <footer class="footer">
                 <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a
+                            href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
+                            class="ti-heart text-danger ml-1"></i></span>
                 </div>
                 <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a href="https://www.themewagon.com/" target="_blank">Themewagon</a></span>
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a
+                            href="https://www.themewagon.com/" target="_blank">Themewagon</a></span>
                 </div>
             </footer>
             <!-- partial -->
@@ -428,26 +510,24 @@
 <!-- container-scroller -->
 
 <!-- plugins:js -->
-<script src="vendors/js/vendor.bundle.base.js"></script>
-<!-- endinject -->
-<!-- Plugin js for this page -->
-<script src="vendors/chart.js/Chart.min.js"></script>
-<script src="vendors/datatables.net/jquery.dataTables.js"></script>
-<script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-<script src="js/dataTables.select.min.js"></script>
+<script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
 
-<!-- End plugin js for this page -->
-<!-- inject:js -->
-<script src="js/off-canvas.js"></script>
-<script src="js/hoverable-collapse.js"></script>
-<script src="js/template.js"></script>
-<script src="js/settings.js"></script>
-<script src="js/todolist.js"></script>
+{{-- Plugin js for each page --}}
+@yield('page-plugin-js')
+{{-- End plugin js for each page --}}
 <!-- endinject -->
-<!-- Custom js for this page-->
-<script src="js/dashboard.js"></script>
-<script src="js/Chart.roundedBarCharts.js"></script>
-<!-- End custom js for this page-->
+
+<!-- inject:js -->
+<script src="{{ asset('js/off-canvas.js') }}"></script>
+<script src="{{ asset('js/hoverable-collapse.js') }}"></script>
+<script src="{{ asset('js/template.js') }}"></script>
+<script src="{{ asset('js/settings.js') }}"></script>
+<script src="{{ asset('js/todolist.js') }}"></script>
+<!-- endinject -->
+
+{{-- Custom js for each page --}}
+@yield('page-js')
+{{-- End custom js for each page --}}
 </body>
 
 </html>
