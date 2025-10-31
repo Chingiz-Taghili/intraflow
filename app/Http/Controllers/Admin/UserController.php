@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.users.index');
+        $perPage = $request->query('per_page', 15);
+        $users = User::with(['department', 'roles', 'categoryResponsibles', 'requisitions'])
+            ->paginate($perPage);
+        return view('admin.users.index', compact('users'));
     }
 
     public function create()

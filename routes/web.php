@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryResponsibleController;
 use App\Http\Controllers\Admin\DepartmentController;
@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::resource('users', UserController::class);
 Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('categories', CategoryController::class);
         Route::resource('categories.subcategories', SubcategoryController::class);
         Route::resource('departments', DepartmentController::class);
@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
 
         // -------------------- admin|superadmin only --------------------
         Route::middleware(['role:admin|superadmin'])->group(function () {
-            Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
             Route::resource('categories', CategoryController::class);
             Route::resource('categories.subcategories', SubcategoryController::class);
             Route::resource('departments', DepartmentController::class);

@@ -7,13 +7,16 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 class UserApiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with(['department', 'roles', 'categoryResponsibles', 'requisitions'])->get();
+        $perPage = $request->query('per_page', 15);
+        $users = User::with(['department', 'roles', 'categoryResponsibles', 'requisitions'])
+            ->paginate($perPage);
         return UserResource::collection($users)->additional(['success' => true]);
     }
 
