@@ -14,9 +14,30 @@ class UserApiController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->query('per_page', 15);
+        $perPage = $request->integer('per_page', 15);
+        $sortBy = $request->query('sort_by', 'id');
+        $sortOrder = $request->query('sort_order', 'asc');
+
         $users = User::with(['department', 'roles', 'categoryResponsibles', 'requisitions'])
-            ->paginate($perPage);
+            // Filters
+            ->when($request->query('department_id'),
+                fn($q, $departmentId) => $q->where('department_id', $departmentId))
+            ->when($request->query('role'),
+                fn($q, $role) => $q->whereHas('roles', fn($r) => $r->where('name', $role)))
+            ->when($request->query('email_verified'), fn($q, $verified) => $verified === 'true'
+                ? $q->whereNotNull('email_verified_at') : $q->whereNull('email_verified_at'))
+            // Global search
+            ->when($request->query('search'), fn($q, $search) => $q
+                ->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%")
+                        ->orWhere('surname', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('job_title', 'like', "%{$search}%")
+                        ->orWhere('phone_number', 'like', "%{$search}%");
+                }))
+            // Sort
+            ->orderBy($sortBy, $sortOrder)->paginate($perPage)->appends($request->query());
+
         return UserResource::collection($users)->additional(['success' => true]);
     }
 

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Requisition;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             CategoryResponsibleSeeder::class,
         ]);
 
-        Requisition::factory()->count(10)->create();
+        User::factory()->count(5)->create();
+        Requisition::factory()->count(20)->create();
     }
 }
