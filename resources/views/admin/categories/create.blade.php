@@ -6,8 +6,12 @@
 
 @section('page-css') @endsection
 
+@section('search')
+  {{-- search input is only shown on index pages --}}
+@endsection
+
 @section('content')
-    <h1>Category create page</h1>
+  <h1>Category create page</h1>
 @endsection
 
 @section('page-plugin-js') @endsection
