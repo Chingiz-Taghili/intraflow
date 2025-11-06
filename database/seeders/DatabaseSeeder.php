@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             CategoryResponsibleSeeder::class,
         ]);
 
-        User::factory()->count(5)->create();
+        User::factory()->count(50)->create();
         Requisition::factory()->count(20)->create();
     }
 }
