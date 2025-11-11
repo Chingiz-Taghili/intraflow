@@ -22,74 +22,79 @@
 
 @section('content')
 
-  {{--<div class="card">
-    <div class="card-header"><h4 class="card-title">Multi Filter Select</h4></div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table id="multi-filter-select" class="display table table-striped table-hover">
-          <thead>
-          <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Department</th>
-            <th>Roles</th>
-          </tr>
-          </thead>
-          <tfoot>
-          <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Department</th>
-            <th>Roles</th>
-          </tr>
-          </tfoot>
-          <tbody>
-          @forelse($users as $user)
-            <tr>
-              <td>{{ $user->name }}</td>
-              <td>{{ $user->surname }}</td>
-              <td>{{ $user->email }}</td>
-              <td>{{ $user->department->name ?? '-' }}</td>
-              <td>{{ $user->getRoleNames()->join(', ') }}</td>
-            </tr>
-          @empty
-            <tr>
-              <td colspan="5" class="text-center">No users found</td>
-            </tr>
-          @endforelse
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>--}}
-
   <div class="card">
-    <div class="card-header"><h4 class="card-title">Multi Filter Select</h4></div>
+    <div class="card-header"><h4 class="card-title">User List</h4></div>
     <div class="card-body">
       <div class="table-responsive">
         <div id="multi-filter-select_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-          <div class="row">
-            <div class="col-sm-12 col-md-6">
-              <div class="dataTables_length" id="multi-filter-select_length"><label>Show <select
-                    name="multi-filter-select_length" aria-controls="multi-filter-select"
-                    class="form-control form-control-sm">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </select> entries</label></div>
+          <div class="row mb-3">
+            <div class="col-sm-12 col-md-3">
+              <div class="dataTables_length" id="multi-filter-select_length">
+                <label>Show <select
+                    name="per_page" aria-controls="multi-filter-select"
+                    class="filter-input form-control form-control-sm">
+                    <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                    <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                    <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                  </select> results</label>
+              </div>
             </div>
-            <div class="col-sm-12 col-md-6">
-              <div id="multi-filter-select_filter" class="dataTables_filter">
-                <label>Search:<input type="search"
-                                     class="form-control form-control-sm" placeholder="" aria-controls="multi-filter-select">
-                </label>
+            <div class="col-sm-12 col-md-3">
+              <div class="dataTables_length" id="multi-filter-select_length">
+                <label>Department: <select
+                    name="department_id" aria-controls="multi-filter-select"
+                    class="filter-input form-control form-control-sm">
+                    <option value="">All</option>
+                    @foreach($departments as $d)
+                      <option value="{{ $d->id }}" {{ request('department_id') == $d->id ? 'selected' : '' }}>
+                        {{ $d->name }}
+                      </option>
+                    @endforeach
+                  </select></label>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-3">
+              <div class="dataTables_length" id="multi-filter-select_length">
+                <label>Role: <select
+                    name="role" aria-controls="multi-filter-select"
+                    class="filter-input form-control form-control-sm">
+                    <option value="">All</option>
+                    @foreach($roles as $r)
+                      <option value="{{ $r->name }}" {{ request('role') == $r->name ? 'selected' : '' }}>
+                        {{ $r->name }}
+                      </option>
+                    @endforeach
+                  </select></label>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-3">
+              <div class="dataTables_length" id="multi-filter-select_length">
+                <label>Email Verified: <select
+                    name="email_verified" aria-controls="multi-filter-select"
+                    class="filter-input form-control form-control-sm">
+                    <option value="">All</option>
+                    <option value="true" {{ request('email_verified') == 'true' ? 'selected' : '' }}>Verified</option>
+                    <option value="false" {{ request('email_verified') == 'false' ? 'selected' : '' }}>Not Verified
+                    </option>
+                  </select></label>
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mb-3">
+            <div class="col text-end">
+              <form id="search-form" class="d-inline">
+                <div id="multi-filter-select_filter" class="dataTables_filter">
+                  <label>Search:<input type="search" name="search" value="{{ request('search') }}"
+                                       class="form-control form-control-sm" placeholder=""
+                                       aria-controls="multi-filter-select">
+                  </label>
+                  <button type="submit" class="btn btn-sm btn-primary ms-2">Search</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row mb-3">
             <div class="col-sm-12">
               <table id="multi-filter-select" class="display table table-striped table-hover">
                 <thead>
@@ -101,15 +106,6 @@
                   <th>Roles</th>
                 </tr>
                 </thead>
-                <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Surname</th>
-                  <th>Email</th>
-                  <th>Department</th>
-                  <th>Roles</th>
-                </tr>
-                </tfoot>
                 <tbody>
                 @forelse($users as $user)
                   <tr>
@@ -128,92 +124,11 @@
               </table>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-12 col-md-5">
-              <div class="dataTables_info" id="multi-filter-select_info" role="status" aria-live="polite">
-                Showing 1 to 10 of 15 entries
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-7">
-              <div class="dataTables_paginate paging_simple_numbers" id="multi-filter-select_paginate">
-                {{--<ul class="pagination">
-                  <li class="paginate_button page-item previous disabled" id="multi-filter-select_previous">
-                    <a href="#"
-                       aria-controls="multi-filter-select" data-dt-idx="0" tabindex="0" class="page-link">
-                      Previous</a>
-                  </li>
-                  <li class="paginate_button page-item active">
-                    <a href="#" aria-controls="multi-filter-select" data-dt-idx="1"
-                       tabindex="0" class="page-link">1</a></li>
-                  <li class="paginate_button page-item ">
-                    <a href="#" aria-controls="multi-filter-select" data-dt-idx="2"
-                       tabindex="0" class="page-link">2</a></li>
-                  <li class="paginate_button page-item next" id="multi-filter-select_next">
-                    <a href="#" aria-controls="multi-filter-select" data-dt-idx="3" tabindex="0"
-                       class="page-link">Next</a></li>
-                </ul>--}}
-                {{ $users->links() }}
-              </div>
-            </div>
-          </div>
+          {{ $users->links('vendor.pagination.admin') }}
         </div>
       </div>
     </div>
   </div>
-
-  {{--<div id="multi-filter-select_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-    <div class="row">
-      <div class="col-sm-12 col-md-6">
-        <div class="dataTables_length" id="multi-filter-select_length"><label>Show <select
-              name="multi-filter-select_length" aria-controls="multi-filter-select"
-              class="form-control form-control-sm">
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select> entries</label></div>
-      </div>
-      <div class="col-sm-12 col-md-6">
-        <div id="multi-filter-select_filter" class="dataTables_filter">
-          <label>Search:<input type="search"
-            class="form-control form-control-sm" placeholder="" aria-controls="multi-filter-select">
-          </label>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-5">
-        <div class="dataTables_info" id="multi-filter-select_info" role="status" aria-live="polite">
-          Showing 1 to 10 of 15 entries
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-7">
-        <div class="dataTables_paginate paging_simple_numbers" id="multi-filter-select_paginate">
-          <ul class="pagination">
-            <li class="paginate_button page-item previous disabled" id="multi-filter-select_previous">
-              <a href="#"
-                 aria-controls="multi-filter-select" data-dt-idx="0" tabindex="0" class="page-link">
-                Previous</a>
-            </li>
-            <li class="paginate_button page-item active">
-              <a href="#" aria-controls="multi-filter-select" data-dt-idx="1"
-                 tabindex="0" class="page-link">1</a></li>
-            <li class="paginate_button page-item ">
-              <a href="#" aria-controls="multi-filter-select" data-dt-idx="2"
-                 tabindex="0" class="page-link">2</a></li>
-            <li class="paginate_button page-item next" id="multi-filter-select_next">
-              <a href="#" aria-controls="multi-filter-select" data-dt-idx="3" tabindex="0"
-                 class="page-link">Next</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>--}}
 
 @endsection
 
@@ -221,7 +136,38 @@
 
 @section('page-js')
 
-  <script src="{{ asset('datatable/datatables.min.js') }}"></script>
+  <script>
+    // For Filter Selects
+    document.querySelectorAll('.filter-input').forEach(el => {
+      el.addEventListener('change', () => {
+        const params = new URLSearchParams(window.location.search);
+        document.querySelectorAll('.filter-input').forEach(input => {
+          if (input.value)
+            params.set(input.name, input.value);
+          else
+            params.delete(input.name);
+        });
+        params.delete('page');
+        window.location.search = params.toString();
+      });
+    });
+
+    // For Search Input
+    const searchForm = document.getElementById('search-form');
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const params = new URLSearchParams(window.location.search);
+      document.querySelectorAll('.filter-input').forEach(input => {
+        if (input.value) params.set(input.name, input.value);
+        else params.delete(input.name);
+      });
+      const searchInput = searchForm.querySelector('input[name="search"]');
+      if (searchInput.value) params.set('search', searchInput.value);
+      else params.delete('search');
+      params.delete('page');
+      window.location.search = params.toString();
+    });
+  </script>
   <script>
     $(document).ready(function () {
       $("#multi-filter-select").DataTable({

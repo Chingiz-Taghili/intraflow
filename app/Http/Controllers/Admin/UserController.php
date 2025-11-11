@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->integer('per_page', 15);
+        $perPage = $request->integer('per_page', 10);
         $sortBy = $request->query('sort_by', 'id');
         $sortOrder = $request->query('sort_order', 'asc');
+
+        $departments = Department::all();
+        $roles = Role::all();
 
         $users = User::with(['department', 'roles', 'categoryResponsibles', 'requisitions'])
             // Filters
@@ -34,7 +39,7 @@ class UserController extends Controller
             // Sort
             ->orderBy($sortBy, $sortOrder)->paginate($perPage)->appends($request->query());
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', compact('users', 'departments', 'roles'));
     }
 
     public function create()
