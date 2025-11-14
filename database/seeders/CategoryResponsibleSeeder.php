@@ -5,10 +5,13 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\CategoryResponsible;
 use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CategoryResponsibleSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Run the database seeds.
      */

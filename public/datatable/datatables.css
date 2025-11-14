@@ -16,14 +16,17 @@ table.dataTable td.dataTables_empty, table.dataTable th.dataTables_empty {
 }
 
 div.dataTables_wrapper div.dataTables_length label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-weight: normal;
-  text-align: left;
   white-space: nowrap;
+  width: 100%;
 }
 
 div.dataTables_wrapper div.dataTables_length select {
-  width: 75px;
-  display: inline-block;
+  flex: 1;
+  margin: 0 5px;
 }
 
 div.dataTables_wrapper div.dataTables_filter {

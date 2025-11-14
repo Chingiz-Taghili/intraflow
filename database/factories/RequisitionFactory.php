@@ -26,7 +26,7 @@ class RequisitionFactory extends Factory
         return [
             'user_id' => $user->id, 'category_id' => $category->id,
             'subcategory_id' => $subcategory ? $subcategory->id : null,
-            'item_name' => fake()->word(), 'notes' => fake()->sentence(),
+            'item_name' => fake()->word(), 'notes' => fake()->text(),
         ];
     }
 }

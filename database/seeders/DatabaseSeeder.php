@@ -4,10 +4,13 @@ namespace Database\Seeders;
 
 use App\Models\Requisition;
 use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Seed the application's database.
      */
@@ -21,7 +24,7 @@ class DatabaseSeeder extends Seeder
             CategoryResponsibleSeeder::class,
         ]);
 
-        User::factory()->count(50)->create();
-        Requisition::factory()->count(20)->create();
+        User::factory(50)->create();
+        Requisition::factory(20)->create();
     }
 }

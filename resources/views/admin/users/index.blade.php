@@ -26,12 +26,12 @@
     <div class="card-header"><h4 class="card-title">User List</h4></div>
     <div class="card-body">
       <div class="table-responsive">
-        <div id="multi-filter-select_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+        <div class="dataTables_wrapper container-fluid dt-bootstrap4">
           <div class="row mb-3">
-            <div class="col-sm-12 col-md-3">
-              <div class="dataTables_length" id="multi-filter-select_length">
+            <div class="col-sm-12 col-md-1">
+              <div class="dataTables_length">
                 <label>Show <select
-                    name="per_page" aria-controls="multi-filter-select"
+                    name="per_page"
                     class="filter-input form-control form-control-sm">
                     <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
                     <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
@@ -40,10 +40,10 @@
                   </select> results</label>
               </div>
             </div>
-            <div class="col-sm-12 col-md-3">
-              <div class="dataTables_length" id="multi-filter-select_length">
+            <div class="col-sm-12 col-md-3 offset-md-2">
+              <div class="dataTables_length">
                 <label>Department: <select
-                    name="department_id" aria-controls="multi-filter-select"
+                    name="department_id"
                     class="filter-input form-control form-control-sm">
                     <option value="">All</option>
                     @foreach($departments as $d)
@@ -55,9 +55,9 @@
               </div>
             </div>
             <div class="col-sm-12 col-md-3">
-              <div class="dataTables_length" id="multi-filter-select_length">
+              <div class="dataTables_length">
                 <label>Role: <select
-                    name="role" aria-controls="multi-filter-select"
+                    name="role"
                     class="filter-input form-control form-control-sm">
                     <option value="">All</option>
                     @foreach($roles as $r)
@@ -69,9 +69,9 @@
               </div>
             </div>
             <div class="col-sm-12 col-md-3">
-              <div class="dataTables_length" id="multi-filter-select_length">
+              <div class="dataTables_length">
                 <label>Email Verified: <select
-                    name="email_verified" aria-controls="multi-filter-select"
+                    name="email_verified"
                     class="filter-input form-control form-control-sm">
                     <option value="">All</option>
                     <option value="true" {{ request('email_verified') == 'true' ? 'selected' : '' }}>Verified</option>
@@ -84,10 +84,9 @@
           <div class="row mb-3">
             <div class="col text-end">
               <form id="search-form" class="d-inline">
-                <div id="multi-filter-select_filter" class="dataTables_filter">
+                <div class="dataTables_filter">
                   <label>Search:<input type="search" name="search" value="{{ request('search') }}"
-                                       class="form-control form-control-sm" placeholder=""
-                                       aria-controls="multi-filter-select">
+                                       class="form-control form-control-sm" placeholder="">
                   </label>
                   <button type="submit" class="btn btn-sm btn-primary ms-2">Search</button>
                 </div>
@@ -96,7 +95,7 @@
           </div>
           <div class="row mb-3">
             <div class="col-sm-12">
-              <table id="multi-filter-select" class="display table table-striped table-hover">
+              <table class="display table table-striped table-hover">
                 <thead>
                 <tr>
                   <th>Name</th>
@@ -166,27 +165,6 @@
       else params.delete('search');
       params.delete('page');
       window.location.search = params.toString();
-    });
-  </script>
-  <script>
-    $(document).ready(function () {
-      $("#multi-filter-select").DataTable({
-        pageLength: 10,
-        initComplete: function () {
-          this.api().columns().every(function () {
-            var column = this;
-            var select = $('<select class="form-select"><option value=""></option></select>')
-              .appendTo($(column.footer()).empty())
-              .on("change", function () {
-                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                column.search(val ? "^" + val + "$" : "", true, false).draw();
-              });
-            column.data().unique().sort().each(function (d, j) {
-              select.append('<option value="' + d + '">' + d + "</option>");
-            });
-          });
-        },
-      });
     });
   </script>
 
